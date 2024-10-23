@@ -9,4 +9,3 @@ xgboost
 imbalanced-learn
 dill
 optuna
--e .
