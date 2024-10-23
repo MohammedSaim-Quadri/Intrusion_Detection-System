@@ -8,6 +8,7 @@ from src.logger import logging
 from src.exception import CustomException  
 from dataclasses import dataclass
 from src.components.data_transformation import DataTransformation
+from src.components.model_trainer import ModelTrainer
 
 
 @dataclass
@@ -54,6 +55,10 @@ if __name__ == "__main__":
     obj = DataIngestion()
     test_path, train_path = obj.initialize_data_ingestion()
     data_transform = DataTransformation()
-    data_transform.initialize_transformation(train_path, test_path)
+    train_data, test_data, _ = data_transform.initialize_transformation(train_path, test_path)
+    trainer = ModelTrainer()
+    #print(trainer.initiate_XGB_trainer(train_data, test_data))
+    print(trainer.initiate_NN_trainer(train_data, test_data))
+
 
 

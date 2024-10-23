@@ -1,11 +1,12 @@
-numpy  
-pandas  
-scikit-learn  
-tensorflow  
-keras-tuner  
-matplotlib  
-seaborn  
-xgboost  
+numpy
+pandas
+scikit-learn
+tensorflow
+keras-tuner
+matplotlib
+seaborn
+xgboost
 imbalanced-learn
 dill
+optuna
 -e .
