@@ -1,0 +1,11 @@
+numpy  
+pandas  
+scikit-learn  
+tensorflow  
+keras-tuner  
+matplotlib  
+seaborn  
+xgboost  
+imbalanced-learn
+dill
+-e .
