@@ -93,61 +93,57 @@ These results indicate a well-performing model that generalizes effectively to u
 ## Installation
 
 1. Clone the repository:
-   \`\`\`bash
+   ```bash
    git clone https://github.com/username/IDS.git
-   \`\`\`
+   ```
 
 2. Navigate to the project directory:
-   \`\`\`bash
+   ```bash
    cd IDS
-   \`\`\`
+   ```
 
 3. Create and activate a virtual environment (optional but recommended):
-   \`\`\`bash
+   ```bash
    python -m venv venv
    source venv/bin/activate   # For Windows: venv\Scripts\activate
-   \`\`\`
+   ```
 
 4. Install required dependencies:
    \`\`\`bash
    pip install -r requirements.txt
    \`\`\`
 
-5. Prepare the dataset:
-   - Download the [CICIDS2018](https://www.unb.ca/cic/datasets/ids-2018.html) dataset.
-   - Place it in the \`dataset/\` folder.
-
 ## Usage
 
 1. Run the data ingestion pipeline:
-   \`\`\`bash
+   ```bash
    python src/components/data_ingestion.py
-   \`\`\`
+   ```
 
 2. (Optional) Perform hyperparameter tuning:
-   \`\`\`bash
+   ```bash
    python src/components/bayesian_tuner.py
    python src/components/optuna_tuner.py
-   \`\`\`
+   ```
 
 3. View logs for detailed execution info:
-   \`\`\`bash
+   ```bash
    tail -f logs/*.log
-   \`\`\`
+   ```
 
 ## Hyperparameter Tuning
 
 This project includes two methods for tuning model hyperparameters:
 
 1. **Bayesian Optimization:** This uses probabilistic models to explore the hyperparameter space. Run it using:
-   \`\`\`bash
+   ```bash
    python src/components/bayesian_tuner.py
-   \`\`\`
+   ```
 
 2. **Optuna:** A popular framework for efficient hyperparameter optimization. To use Optuna, run:
-   \`\`\`bash
+   ```bash
    python src/components/optuna_tuner.py
-   \`\`\`
+   ```
 
 Both methods aim to improve the model’s accuracy while reducing training time.
 
@@ -166,21 +162,21 @@ The Dockerfile provided sets up the environment with TensorFlow and Python 3 sup
 ### Steps:
 
 1. Build the Docker image:
-   \`\`\`bash
+   ```bash
    docker build -t ids-system .
-   \`\`\`
+   ```
 
 2. Run the Docker container:
-   \`\`\`bash
+   ```bash
    docker run -p 6006:6006 ids-system
-   \`\`\`
+   ```
 
    This exposes port 6006 for TensorBoard or other monitoring tools.
 
 3. The default command in the container is to run the data ingestion script:
-   \`\`\`bash
+   ```bash
    CMD ["python", "src/components/data_ingestion.py"]
-   \`\`\`
+   ```
 
    You can modify the command to run other scripts as needed.
 
@@ -200,13 +196,13 @@ To contribute:
 
 1. Fork the repository.
 2. Create a new branch for your feature:
-   \`\`\`bash
+   ```bash
    git checkout -b feature/your-feature
-   \`\`\`
+   ```
 
 3. Make your changes and push to your branch:
-   \`\`\`bash
+   ```bash
    git push origin feature/your-feature
-   \`\`\`
+   ```
 
 4. Create a pull request
