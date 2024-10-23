@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Copy only the essential files to avoid unnecessary dependencies
 COPY ./src /app/src
-COPY ./artifacts /app/artifacts   # Store pre-trained models and data artifacts here
+COPY ./artifacts /app/artifacts
 COPY ./dataset /app/dataset
 COPY requirements.txt /app
 
