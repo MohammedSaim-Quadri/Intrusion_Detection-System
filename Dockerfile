@@ -11,7 +11,7 @@ COPY ./dataset /app/dataset
 COPY requirements.txt /app
 
 # Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --upgrade pip && pip install -r requirements.txt
 
 # Expose a port for monitoring (TensorBoard or other tools)
 EXPOSE 6006
