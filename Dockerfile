@@ -1,5 +1,5 @@
 # Use an official TensorFlow base image with Python 3 support
-FROM tensorflow/tensorflow:2.10.0-py3
+FROM tensorflow/tensorflow:2.16.1
 
 # Set the working directory inside the container
 WORKDIR /app
