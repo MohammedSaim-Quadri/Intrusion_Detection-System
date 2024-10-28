@@ -1,4 +1,9 @@
 # End-To-End ML/DL Intrusion Detection System
+![Python](https://img.shields.io/badge/python-3.8%2B-blue)  
+![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange)  
+![Docker](https://img.shields.io/badge/docker-available-brightgreen)  
+![License](https://img.shields.io/badge/license-Apache%202.0-green)  
+
 
 ## Table of Contents
 1. [Overview](#overview)
@@ -22,7 +27,6 @@ This project involves developing an Intrusion Detection System (IDS) using machi
 ``` bash
 ├── .gitattributes
 ├── .gitignore
-├── .dockerignore
 ├── Dockerfile                 # Docker configuration for containerization
 ├── README.md
 ├── requirements.txt           # Project dependencies
@@ -206,3 +210,7 @@ To contribute:
    ```
 
 4. Create a pull request
+
+## License
+This project is licensed under the Apache License 2.0. See the [LICENSE](./LICENSE) file for details.
+
