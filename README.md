@@ -22,6 +22,7 @@
 ## Overview
 
 This project involves developing an Intrusion Detection System (IDS) using machine learning techniques to identify and prevent network intrusions. The system leverages a neural network (NN) model trained on the CICIDS2018 dataset to classify network traffic as either normal or malicious. The project includes data preprocessing, model training, hyperparameter tuning, evaluation, and Docker containerization for deployment.
+![Architecture Diagram](diagrams/intrusion_detection_system_architecture.png)
 
 ## Project Structure
 ``` bash
