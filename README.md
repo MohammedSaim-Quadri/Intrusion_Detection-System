@@ -1,6 +1,6 @@
 # End-To-End ML/DL Intrusion Detection System
-![Python](https://img.shields.io/badge/python-3.8%2B-blue)  
-![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange)  
+![Python](https://img.shields.io/badge/python-3.12%2B-blue)  
+![TensorFlow](https://img.shields.io/badge/TensorFlow-2.16.1-orange)  
 ![Docker](https://img.shields.io/badge/docker-available-brightgreen)  
 ![License](https://img.shields.io/badge/license-Apache%202.0-green)  
 
