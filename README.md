@@ -164,28 +164,48 @@ After training the model, it's evaluated using the following metrics:
 
 The Dockerfile provided sets up the environment with TensorFlow and Python 3 support, installs the necessary dependencies, and exposes the required port for monitoring.
 
-### Steps:
+#### Option 1: Build the Docker Image Locally
 
-1. Build the Docker image:
+1. **Build the Docker image**:
+
    ```bash
    docker build -t ids-system .
    ```
+2. **Run the Docker container**:
 
-2. Run the Docker container:
-   ```bash
-   docker run -p 6006:6006 ids-system
-   ```
+```bash
+docker run -p 6006:6006 ids-system
+```
+This exposes port 6006 for TensorBoard or other monitoring tools.
 
-   This exposes port 6006 for TensorBoard or other monitoring tools.
+3. **Default Command: The default command in the container is to run the data ingestion script**:
 
-3. The default command in the container is to run the data ingestion script:
-   ```bash
-   CMD ["python", "src/components/data_ingestion.py"]
-   ```
+```bash
+CMD ["python", "src/components/data_ingestion.py"]
+```
+You can modify the command to run other scripts as needed.
 
-   You can modify the command to run other scripts as needed.
+4. **Access Monitoring Tools**: Access TensorBoard or any other monitoring tools at http://localhost:6006.
 
-4. Access the TensorBoard or any other monitoring tools at \`http://localhost:6006\`.
+### Option 2: Pull the Docker Image from Docker Hub
+If you prefer not to build the image locally, you can directly pull the pre-built Docker image from Docker Hub:
+
+1. **Pull the Docker image**:
+
+```bash
+docker pull saimquadri/ids-project
+```
+
+2. **Run the Docker container**:
+
+```bash
+docker run -p 6006:6006 saimquadri/ids-project
+```
+This will expose port 6006 for monitoring tools like TensorBoard.
+
+3. **Default Command**: The default command will automatically run the data ingestion script. You can override this by specifying a different command when running the container.
+
+4. **Access Monitoring Tools**: Access TensorBoard or any other monitoring tools at http://localhost:6006.
 
 ## Future Work
 
