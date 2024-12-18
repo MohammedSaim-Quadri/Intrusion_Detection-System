@@ -1,0 +1,9 @@
+cicflowmeter_path: "capture/CICFlowMeter" # path to CICFlowMeter  
+pcap_path: "capture/tsharkfiles" # path to tshark files
+output_path: "capture/cicoutputs" # path to cic outputs
+tshark_path: "C:\\Program Files\\Wireshark\\tshark.exe" # path to tshark
+
+duration: 60  # seconds to capture traffic 
+interface: ""  # interface to capture traffic
+max_retries: 3  # max retries for each pcap file
+csv_wait_timeout: 30  # seconds to wait for csv file to be created

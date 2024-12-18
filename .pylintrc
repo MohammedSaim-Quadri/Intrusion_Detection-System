@@ -1,0 +1,76 @@
+[MASTER]
+# Add any Python module names where names can be trusted to not be duplicates
+ignore=CVS
+
+# Files or directories to be skipped. They should be base names, not paths
+ignore-patterns=
+
+# Python code to execute, usually for sys.path manipulation such as pygtk.require()
+#init-hook=
+
+# Use multiple processes to speed up Pylint
+jobs=4
+
+# List of plugins (as comma separated values of python modules names) to load
+load-plugins=
+
+# Allow loading of arbitrary C extensions. Extensions are imported into the active Python interpreter and may run arbitrary code
+unsafe-load-any-extension=no
+
+[MESSAGES CONTROL]
+# Only show warnings with the listed confidence levels. Leave empty to show all.
+confidence=
+
+# Disable specific warnings
+disable=C0111,  # missing-docstring
+        C0103,  # invalid-name
+        C0303,  # trailing-whitespace
+        W0311,  # bad-indentation
+        W0603,  # global-statement
+        R0903,  # too-few-public-methods
+        R0913,  # too-many-arguments
+        R0914,  # too-many-locals
+        W0621,  # redefined-outer-name
+        W0703   # broad-except
+
+[FORMAT]
+# Maximum number of characters on a single line
+max-line-length=100
+
+# Maximum number of lines in a module
+max-module-lines=2000
+
+# String used as indentation unit. This is usually "    " (4 spaces) or "\t" (1 tab).
+indent-string='    '
+
+[BASIC]
+# Regular expression which should only match function or class names
+function-rgx=[a-z_][a-z0-9_]{2,50}$
+class-rgx=[A-Z_][a-zA-Z0-9_]+$
+
+# Regular expression which should only match correct variable names
+variable-rgx=[a-z_][a-z0-9_]{2,50}$
+
+# Good variable names which should always be accepted
+good-names=i,j,k,ex,Run,_,fd,fp,id
+
+[SIMILARITIES]
+# Minimum lines number of a similarity
+min-similarity-lines=4
+
+# Ignore imports when computing similarities
+ignore-imports=yes
+
+[TYPECHECK]
+# List of module names for which member attributes should not be checked
+ignored-modules=numpy,tensorflow,torch,cv2
+
+# List of classes names for which member attributes should not be checked
+ignored-classes=SQLObject
+
+[VARIABLES]
+# A regular expression matching the name of dummy variables
+dummy-variables-rgx=_$|dummy
+
+# List of additional names to consider as builtins
+additional-builtins= 
