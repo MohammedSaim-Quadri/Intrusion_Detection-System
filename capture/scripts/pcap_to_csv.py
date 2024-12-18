@@ -1,8 +1,10 @@
+import json
 import logging
 import os
 import subprocess
 import sys
 import time
+from datetime import datetime
 from pathlib import Path
 
 import yaml
@@ -162,15 +164,40 @@ def run_cicflowmeter(pcap_file, output_path, cicflowmeter_path, max_retries=3):
     
     return False
 
+def update_status(status_file, status_data):
+    """Update the status file with current progress."""
+    with open(status_file, 'w') as f:
+        json.dump(status_data, f, default=str)
+
 def main():
     setup_logging()
-
+    
     try:
         # Get the IDS root directory (two levels up from the script)
         script_path = Path(__file__).resolve()
         root_dir = script_path.parents[2]  # From scripts/pcap_to_csv.py, go up to IDS root
         
-        # Load settings from config directory
+        # Set up status tracking
+        status_dir = root_dir / "status"
+        status_dir.mkdir(exist_ok=True)
+        status_file = status_dir / "pcap_processing_status.json"
+        
+        # Initialize status data
+        status = {
+            'status': 'initializing',
+            'start_time': datetime.now(),
+            'total_files': 0,
+            'processed_files': 0,
+            'successful_files': 0,
+            'failed_files': 0,
+            'current_file': None,
+            'total_bytes_processed': 0,
+            'errors': [],
+            'last_update': datetime.now()
+        }
+        update_status(status_file, status)
+        
+        # Load settings and validate paths (existing code)
         config_path = root_dir / "config" / "settings.yaml"
         if not config_path.exists():
             raise FileNotFoundError(f"Settings file not found: {config_path}")
@@ -178,7 +205,7 @@ def main():
         with open(config_path, "r", encoding='utf-8') as file:
             settings = yaml.safe_load(file)
 
-        # Get absolute paths from settings, relative to root_dir
+        # Get absolute paths from settings
         pcap_dir = (root_dir / settings["pcap_path"]).resolve()
         output_path = (root_dir / settings["output_path"]).resolve()
         cicflowmeter_path = (root_dir / settings["cicflowmeter_path"]).resolve()
@@ -197,38 +224,57 @@ def main():
 
         # Get list of unprocessed PCAP files
         unprocessed_pcaps = get_unprocessed_pcaps(pcap_dir, output_path)
+        status['total_files'] = len(unprocessed_pcaps)
+        status['status'] = 'processing'
+        update_status(status_file, status)
         
         if not unprocessed_pcaps:
+            status['status'] = 'completed'
+            status['message'] = "No new PCAP files to process"
+            update_status(status_file, status)
             logging.info("No new PCAP files to process")
-            print("No new PCAP files to process")
             return
             
         logging.info("Found %d unprocessed PCAP files", len(unprocessed_pcaps))
-        print(f"Found {len(unprocessed_pcaps)} unprocessed PCAP files")
         
         # Process each PCAP file
-        success_count = 0
         for pcap_file in unprocessed_pcaps:
             try:
-                print(f"\nProcessing: {pcap_file.name}")
+                # Update status for current file
+                status['current_file'] = pcap_file.name
+                status['last_update'] = datetime.now()
+                update_status(status_file, status)
+                
                 if run_cicflowmeter(str(pcap_file), str(output_path), str(cicflowmeter_path), max_retries):
-                    success_count += 1
-                    print(f"Successfully processed: {pcap_file.name}")
+                    status['successful_files'] += 1
+                    status['total_bytes_processed'] += pcap_file.stat().st_size
                 else:
-                    print(f"Failed to process: {pcap_file.name}")
+                    status['failed_files'] += 1
+                    status['errors'].append(f"Failed to process {pcap_file.name}")
+                
+                status['processed_files'] += 1
+                update_status(status_file, status)
+                
             except Exception as e:
+                status['failed_files'] += 1
+                status['processed_files'] += 1
+                status['errors'].append(f"Error processing {pcap_file.name}: {str(e)}")
                 logging.error("Failed to process %s: %s", pcap_file.name, str(e))
-                print(f"Error processing {pcap_file.name}: {e}")
-                continue
+                update_status(status_file, status)
         
-        # Print summary
-        print(f"\nProcessing complete: {success_count} of {len(unprocessed_pcaps)} files processed successfully")
-        if success_count < len(unprocessed_pcaps):
-            print("Some files failed to process. Check the log file for details.")
+        # Update final status
+        status['status'] = 'completed'
+        status['end_time'] = datetime.now()
+        status['processing_time'] = str(status['end_time'] - status['start_time'])
+        status['success_rate'] = (status['successful_files'] / status['total_files'] * 100) if status['total_files'] > 0 else 0
+        update_status(status_file, status)
 
     except Exception as e:
+        if 'status' in locals():
+            status['status'] = 'error'
+            status['errors'].append(str(e))
+            update_status(status_file, status)
         logging.error("Error during automation: %s", str(e))
-        print(f"\nError: {e}")
         sys.exit(1)
 
 if __name__ == "__main__":
