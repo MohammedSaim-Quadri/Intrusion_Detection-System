@@ -1,0 +1,172 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'maven-publish' // This is the correct way to apply the Maven plugin in newer Gradle versions
+}
+group = 'cic.unb.ca'
+version = '4.0'
+description = """CICFlowMeterV4"""
+
+sourceCompatibility = 21
+targetCompatibility = 21
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    google()
+    jcenter()
+    maven { url "https://clojars.org/repo" }
+}
+dependencies {
+    implementation group: 'org.apache.ant', name: 'ant', version: '1.10.11'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.0'
+    implementation group: 'org.slf4j', name: 'slf4j-log4j12', version:'1.7.25'
+    implementation files('libs/jnetpcap.jar') // Local dependency
+    implementation group: 'junit', name: 'junit', version:'4.12'
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version:'3.6'
+    implementation group: 'org.apache.commons', name: 'commons-math3', version:'3.5'
+    implementation group: 'commons-io', name: 'commons-io', version:'2.5'
+    implementation group: 'nz.ac.waikato.cms.weka', name: 'weka-stable', version:'3.6.14'
+    // https://mvnrepository.com/artifact/org.jfree/jfreechart
+    implementation group: 'org.jfree', name: 'jfreechart', version: '1.5.0'
+    // https://mvnrepository.com/artifact/com.google.guava/guava
+    implementation group: 'com.google.guava', name: 'guava', version: '23.6-jre'
+    // https://mvnrepository.com/artifact/org.apache.tika/tika-core
+    implementation group: 'org.apache.tika', name: 'tika-core', version: '1.17'
+
+}
+sourceSets {
+    main {
+        java {
+            srcDir 'src'
+            exclude '**/CICFlowMeter.java'
+        }
+    }
+}
+
+tasks.withType(Tar) {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+tasks.withType(Copy) {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+distZip {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+task zipSrc(type: Zip){
+    archiveBaseName = "${applicationName}-Source"
+    destinationDirectory = file('build/')
+    from('.'){
+        include '**/'
+        exclude '.gradle/','build/','bin/','logs/','*.iml','*.ipr','*.iws','.idea/','out/','data/'
+        into "${applicationName}V${version}-Src"
+    }
+}
+
+import org.apache.tools.ant.DirectoryScanner
+task zipPro(type: Zip){
+
+    doFirst {
+        DirectoryScanner.defaultExcludes.each { DirectoryScanner.removeDefaultExclude it }
+        //DirectoryScanner.addDefaultExclude 'something has to be in here or everything gets excluded'
+    }
+
+    doLast {
+        DirectoryScanner.resetDefaultExcludes()
+    }
+
+    archiveBaseName = "${applicationName}-Full"
+    destinationDirectory = file('build/')
+
+    from('.'){
+        include '**/'
+        exclude '.gradle/','build/','bin/','logs/','*.iml','*.ipr','*.iws','.idea/','out/','data/',".git/"
+        into "${applicationName}V${version}"
+    }
+}
+
+
+task fatJar(type: Jar) {
+    println 'type Jar'
+
+    manifest {
+
+        attributes 'Premain-Class': 'swing.common.ObjectSizeFetcher'
+        attributes 'Can-Retransform-Classes': true
+        attributes 'Implementation-Title': 'Gradle Jar File Example',
+                'Implementation-Version': version,
+                'Main-Class': 'cic.cs.unb.ca.ifm.App'
+
+    }
+    /*baseName = "NetWorkTraffic" + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    into(new File('build/jar/'))
+    with jar*/
+}
+
+
+task execute(type: JavaExec) {
+    println 'type JavaExec'
+
+
+    main = "cic.cs.unb.ca.ifm.App" //main class
+    classpath = sourceSets.main.runtimeClasspath
+    String osName = System.getProperty('os.name').toLowerCase()
+    if(osName.contains('windows')){
+        jvmArgs '-Djava.library.path=jnetpcap/win/jnetpcap-1.4.r1425'
+    }else{
+        jvmArgs '-Djava.library.path=jnetpcap/linux/jnetpcap-1.4.r1425'
+    }
+}
+
+
+task exeCMD(type: JavaExec){
+    main = "cic.cs.unb.ca.ifm.Cmd" //main class
+    classpath = sourceSets.main.runtimeClasspath
+    String osName = System.getProperty('os.name').toLowerCase()
+    if(osName.contains('windows')){
+        jvmArgs '-Djava.library.path=jnetpcap/win/jnetpcap-1.4.r1425'
+    }else{
+        jvmArgs '-Djava.library.path=jnetpcap/linux/jnetpcap-1.4.r1425'
+    }
+    //args = ["/home/yzhang29/0a/Capture/", "/home/yzhang29/0a/Capture/out/"]
+}
+
+
+task cmdScript(type: CreateStartScripts) {
+    mainClassName = "cic.cs.unb.ca.ifm.Cmd"
+    applicationName = "cfm"
+    outputDir = new File(project.buildDir, 'scripts')
+    classpath = jar.outputs.files + project.configurations.runtimeClasspath
+    defaultJvmOpts = ["-Djava.library.path=../lib/native"]
+}
+
+applicationDistribution.into("bin") {
+    from(cmdScript)
+    fileMode = 0755
+}
+
+
+// The Application Plugin
+mainClassName = "cic.cs.unb.ca.ifm.App"
+applicationName = "CICFlowMeter"
+applicationDefaultJvmArgs = ["-Djava.library.path=../lib/native"]
+
+applicationDistribution.from("jnetpcap/linux/jnetpcap-1.4.r1425") {
+    include "*.so"
+    into('lib/native')
+}
+applicationDistribution.from("jnetpcap/win/jnetpcap-1.4.r1425") {
+    include "*.dll"
+    into('lib/native')
+}
+applicationDistribution.from('LICENSE.txt'){
+    into('')
+}
+applicationDistribution.from('ReadMe.txt'){
+    into('')
+    rename("ReadMe.txt","README.md")
+}
