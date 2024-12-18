@@ -9,4 +9,7 @@ xgboost
 imbalanced-learn
 dill
 optuna
+pyyaml
+pyautogui
+uiautomation
 -e .
