@@ -2,7 +2,7 @@
 ![Python](https://img.shields.io/badge/python-3.12%2B-blue)  
 ![TensorFlow](https://img.shields.io/badge/TensorFlow-2.16.1-orange)  
 ![Docker](https://img.shields.io/badge/docker-available-brightgreen)  
-![License](https://img.shields.io/badge/license-Apache%202.0-green)  
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
 
 
 ## Table of Contents
@@ -21,7 +21,7 @@
 
 ## Overview
 
-This project involves developing an Intrusion Detection System (IDS) using machine learning techniques to identify and prevent network intrusions. The system leverages a neural network (NN) model trained on the CICIDS2018 dataset to classify network traffic as either normal or malicious. The project includes data preprocessing, model training, hyperparameter tuning, evaluation, and Docker containerization for deployment.
+This project involves developing an Intrusion Detection System (IDS) using machine learning techniques to identify and prevent network intrusions. The final model is an XGBoost classifier trained on the CICIDS2018 dataset. The project incorporates full data pipeline automation — from ingestion to deployment — and is production-ready with Docker support.
 ![Architecture Diagram](diagrams/intrusion_detection_system_architecture.png)
 
 ## Project Structure
@@ -32,6 +32,7 @@ This project involves developing an Intrusion Detection System (IDS) using machi
 ├── README.md
 ├── requirements.txt           # Project dependencies
 ├── setup.py                   # Package setup script
+
 ├── artifacts/                 # Folder for artifacts like trained models and preprocessed data
 │   ├── IDS_data.csv           # Original dataset
 │   ├── model_trained.keras      # Trained model
@@ -39,13 +40,17 @@ This project involves developing an Intrusion Detection System (IDS) using machi
 │   ├── preprocessor.pkl       # Data preprocessor
 │   ├── test.csv               # Test dataset
 │   └── train.csv              # Training dataset
+
 ├── dataset/                   # Folder containing dataset files
 │   └── train_data.csv         # Raw training data
-├── logs/                      # Log files for tracking execution 
+
+├── logs/                      # Log files for tracking execution
+
 ├── src/                       # Source code for the project
 │   ├── exception.py           # Custom exception handling
 │   ├── logger.py              # Logging module
 │   ├── utils.py               # Utility functions
+
 │   ├── components/            # Folder containing main components
 │   │   ├── data_ingestion.py  # Data ingestion logic
 │   │   ├── data_transformation.py  # Data preprocessing and feature engineering
@@ -65,7 +70,7 @@ This project involves developing an Intrusion Detection System (IDS) using machi
   - Handling missing values, encoding categorical features, and scaling numerical data.
   
 - **Model Training**:
-  - Implementation of a neural network for intrusion detection.
+  - Includes neural networks (commented), with final model selected as XGBoost based on performance.
   - Training and evaluation of the model with performance metrics.
 
 - **Hyperparameter Tuning**:
@@ -78,6 +83,15 @@ This project involves developing an Intrusion Detection System (IDS) using machi
   - The project includes a Dockerfile to simplify the deployment of the IDS. This allows the application to run consistently across various environments.
 
 ## Performance Metrics
+
+Final model: XGBoost Classifier
+|Metric	|Train (%)	|Test (%)|
+|:-------:|:-----------:|:--------:|
+|Accuracy	|86.00	|86.28 |
+|Precision	|86.36	|86.19 |
+|Recall	|86.00	|86.28 |
+|F1 Score	|86.17	|86.23 |
+|ROC AUC	|98.32	|98.33 |
 
 The following metrics were obtained from the trained neural network model:
 
@@ -114,9 +128,9 @@ These results indicate a well-performing model that generalizes effectively to u
    ```
 
 4. Install required dependencies:
-   \`\`\`bash
+   ```bash
    pip install -r requirements.txt
-   \`\`\`
+   ```
 
 ## Usage
 
@@ -203,16 +217,14 @@ docker run -p 6006:6006 saimquadri/ids-project
 ```
 This will expose port 6006 for monitoring tools like TensorBoard.
 
-3. **Default Command**: The default command will automatically run the data ingestion script. You can override this by specifying a different command when running the container.
-
-4. **Access Monitoring Tools**: Access TensorBoard or any other monitoring tools at http://localhost:6006.
-
 ## Future Work
 
 - Add support for additional machine learning algorithms.
 - Implement real-time intrusion detection using streaming data.
 - Improve model accuracy with advanced feature engineering techniques.
 - Expand Docker support to Kubernetes for large-scale deployments.
+- Feature selection and ensemble model stacking.
+- Integration with cloud-based dashboards for alerts
 
 ## Contributing
 
@@ -233,5 +245,5 @@ To contribute:
 4. Create a pull request
 
 ## License
-This project is licensed under the Apache License 2.0. See the [LICENSE](./LICENSE) file for details.
+This project is licensed under the MIT License(Modified for Attribution and Non-Commercial Use). See the [LICENSE](./LICENSE) file for details.
 
