@@ -2,7 +2,7 @@
 ![Python](https://img.shields.io/badge/python-3.12%2B-blue)  
 ![TensorFlow](https://img.shields.io/badge/TensorFlow-2.16.1-orange)  
 ![Docker](https://img.shields.io/badge/docker-available-brightgreen)  
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg) 
 
 
 ## Table of Contents
