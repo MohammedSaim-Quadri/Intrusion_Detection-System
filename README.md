@@ -85,26 +85,17 @@ This project involves developing an Intrusion Detection System (IDS) using machi
 ## Performance Metrics
 
 Final model: XGBoost Classifier
-|Metric	|Train (%)	|Test (%)|
-|:-------:|:-----------:|:--------:|
-|Accuracy	|86.00	|86.28 |
-|Precision	|86.36	|86.19 |
-|Recall	|86.00	|86.28 |
-|F1 Score	|86.17	|86.23 |
-|ROC AUC	|98.32	|98.33 |
-
-The following metrics were obtained from the trained neural network model:
-
-- **Testing Accuracy Score**: 85.92%
-- **Training Accuracy Score**: 85.89%
-- **Testing F1 Score**: 82.34%
-- **Training F1 Score**: 82.30%
-- **Testing Precision**: 82.32%
-- **Training Precision**: 82.25%
-- **Testing Recall**: 85.92%
-- **Training Recall**: 85.89%
-- **ROC AUC (Test)**: 97.90%
-- **ROC AUC (Train)**: 98.02%
+- Testing Accuracy Score: 89.75%
+- Training Accuracy Score: 89.87%
+- Testing F1 Score: 88.27%
+- Training F1 Score: 88.40%
+- Testing Recall Score: 89.75%
+- Training Recall Score: 89.87%
+- Testing Precision Score: 89.08%
+- Training Precision Score: 89.31%
+- Balanced Accuracy Score: 86.55%
+- ROC AUC (Testing): 99.17%
+- ROC AUC (Training): 99.21%
 
 These results indicate a well-performing model that generalizes effectively to unseen data, achieving high accuracy and a strong balance between precision and recall.
 
