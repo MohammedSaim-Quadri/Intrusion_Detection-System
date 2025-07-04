@@ -1,9 +1,23 @@
-# End-To-End ML/DL Intrusion Detection System
+# Intrusion Detection System (IDS)
 ![Python](https://img.shields.io/badge/python-3.12%2B-blue)  
 ![TensorFlow](https://img.shields.io/badge/TensorFlow-2.16.1-orange)  
 ![Docker](https://img.shields.io/badge/docker-available-brightgreen)  
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg) 
 
+---
+
+## 🚀 UPDATE! [July 2025]
+
+📹 **Demo Video:** [Watch the walkthrough here](https://youtu.be/PJu7FfHhPmQ)
+
+🌐 **Live App:** [Try the deployed IDS app here](https://ids-api-frontend.onrender.com)
+
+> We’ve launched the first version of the web-based IDS system using the XGBoost model from Part 1!  
+> This includes fast inference on network flow data, batch upload support, and a clean UI for predictions and visualizations.
+
+> Stay tuned!
+
+---
 
 ## Table of Contents
 1. [Overview](#overview)
