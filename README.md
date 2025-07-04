@@ -8,9 +8,12 @@
 
 ## 🚀 UPDATE! [July 2025]
 
-📹 **Demo Video:** [Watch the walkthrough here](https://youtu.be/PJu7FfHhPmQ)
+📹 **Demo Video:**
+[![Watch the Demo](https://img.youtube.com/vi/PJu7FfHhPmQ/0.jpg)](https://youtu.be/PJu7FfHhPmQ)
 
-🌐 **Live App:** [Try the deployed IDS app here](https://ids-api-frontend.onrender.com)
+
+🌐 **Live App:**
+[Try the deployed IDS app here](https://ids-api-frontend.onrender.com)
 
 > We’ve launched the first version of the web-based IDS system using the XGBoost model from Part 1!  
 > This includes fast inference on network flow data, batch upload support, and a clean UI for predictions and visualizations.
