@@ -8,7 +8,7 @@
 
 ## 🚀 UPDATE! [July 2025]
 
-📹 **Demo Video:**
+📹 **Demo Video: (click the below image)**
 
 [![Watch the Demo](https://img.youtube.com/vi/PJu7FfHhPmQ/0.jpg)](https://youtu.be/PJu7FfHhPmQ)
 
